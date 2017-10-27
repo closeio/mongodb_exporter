@@ -218,6 +218,9 @@ func (exporter *MongodbCollector) collectMongos(session *mgo.Session, ch chan<- 
 	if shardingStatus != nil {
 		shardingStatus.Export(ch)
 	}
+
+	log.Debug("Collecting Database Status From Mongos")
+	collector_mongos.CollectDatabaseStatus(session, ch)
 }
 
 func (exporter *MongodbCollector) collectMongod(session *mgo.Session, ch chan<- prometheus.Metric) {
@@ -226,6 +229,9 @@ func (exporter *MongodbCollector) collectMongod(session *mgo.Session, ch chan<- 
 	if serverStatus != nil {
 		serverStatus.Export(ch)
 	}
+
+	log.Debug("Collecting Database Status From Mongod")
+	collector_mongod.CollectDatabaseStatus(session, ch)
 }
 
 func (exporter *MongodbCollector) collectMongodReplSet(session *mgo.Session, ch chan<- prometheus.Metric) {
